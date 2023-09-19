@@ -1,0 +1,55 @@
+version: '3'
+services:
+  flask:
+    # Путь до Dockerfile
+    build: ./backend
+    # Имя для создаваемого контейнера
+    # container_name: backend-flask
+    # Создание переменных окружения в контейнере
+    environment:
+      # для отладки (при запуске в релиз убрать!)
+      - FLASK_ENV=development
+      ## Позволяет отслеживать процесс работы приложения в командной строке
+      - PYTHONUNBUFFERED=True                   
+      ##
+    # Перезапускаем сервис в случае падения 
+    restart: on-failure
+    # Прокладывам путь для файлов. Все файлы, которые хранятся у вас в 
+    # директории ./backend, появятся в директории контейнера /backend
+    volumes:
+      - ./backend:/backend
+    # Открываем порт в контейнер
+    # Порт, который будет смотреть наружу : порт который используется внутри контейнера
+    # ports:
+    #   - "5000:5000"
+    entrypoint: [ "bash", "-c", "cd /backend && flask db upgrade && gunicorn main:\"create_app()\" -b 0.0.0.0:5000 --reload"]
+    # command: gunicorn main:"create_app()" -b 0.0.0.0:5000 --reload
+    # gunicorn запускает в файле main.py, функцию create_flask_app по адресу 0.0.0.0:5000
+
+  #Создадим контейнер с Nginx
+  nginx:
+      build:
+          context : .
+          dockerfile: docker/nginx/Dockerfile
+      depends_on:
+          - flask
+      ports:
+          - "5100:5100"
+      restart: always
+
+  #Создадим контейнер с PostgreSQL крайней доступной версии
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: example
+      PGDATA: /var/lib/postgresql/data/pgdata
+
+  #Админская панель для управления PostgreSQL
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

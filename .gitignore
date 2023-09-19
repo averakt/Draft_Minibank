@@ -1,0 +1,11 @@
+venv/
+.idea/
+backend_*/
+db/*
+**/__pycache__/
+**/logs/
+app.db
+**/docker-compose *.yml
+**/docker-compose_*.yml
+**/.env
+**/nginx copy*.conf

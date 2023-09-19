@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Открыть новый счет {% endblock %}</h1>
+    <form method="post">
+        <p>
+            <label for="label1">Выберите</label>
+            <select name="choice">
+            <option value="first">First Value</option>
+            <option value="second" selected>Second Value</option>
+            <option value="third">Third Value</option>
+            </select>
+        </p>
+
+        <p>
+            <label for="author">Первоначальный взнос</label>
+            <input type="text" name="author"
+                   placeholder="10 000,00">
+            </input>
+        </p>
+
+        <p>
+            <label for="pages_num">Срок, лет</label>
+            <input type="number" name="pages_num"
+                   placeholder="(год, лет)">
+            </input>
+        </p>
+        <p>
+        <label for="review">Примечание ко вкладу</label>
+        <br>
+        <textarea name="review"
+                  placeholder="текст"
+                  rows="15"
+                  cols="60"
+                  ></textarea>
+        </p>
+        <p>
+            <button type="submit">Submit</button>
+        </p>
+    </form>
+{% endblock %}
