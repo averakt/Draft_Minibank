@@ -11,6 +11,7 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_babel import Babel, lazy_gettext as _l
 from config import Config
+from featuretoggles import TogglesList
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -21,6 +22,14 @@ mail = Mail()
 bootstrap = Bootstrap()
 moment = Moment()
 babel = Babel()
+
+
+class ReleaseToggles(TogglesList):
+    feature1: bool
+    feature2: bool
+
+
+toggles = ReleaseToggles('app/toggles.yaml')
 
 
 def create_app(config_class=Config):
@@ -44,8 +53,9 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
-    from app.accounts import bp as acc_create_bp
-    app.register_blueprint(acc_create_bp)
+    if toggles.feature1:
+        from app.accounts import bp as acc_create_bp
+        app.register_blueprint(acc_create_bp)
 
     if not app.debug and not app.testing:
         if app.config['MAIL_SERVER']:

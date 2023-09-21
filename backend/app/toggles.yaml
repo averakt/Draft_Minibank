@@ -1,0 +1,15 @@
+---
+feature1:
+    value: true
+    name: route /acc_create
+    description: Страница для добавления счетов
+    jira: RPLN-1
+    creation_date: 2023-09-21
+    max_lifetime: 3
+
+feature2:
+    value: false
+    name: Other Thing Toggler
+    description: This toggles the something else
+    jira: RPLN-2
+    creation_date: 2023-09-21
