@@ -5,7 +5,7 @@ WORKDIR /backend
 # Скачиваем/обновляем необходимые библиотеки для проекта 
 COPY requirements.txt /backend
 RUN pip3 install --upgrade pip -r requirements.txt
-RUN pip install git+https://github.com/uelei/feature-toggles.git#egg=featuretoggles
+# RUN pip install git+https://github.com/uelei/feature-toggles.git#egg=featuretoggles
 RUN pip install psycopg2
 # |ВАЖНЫЙ МОМЕНТ| копируем содержимое папки, где находится Dockerfile, 
 # в рабочую директорию контейнера
