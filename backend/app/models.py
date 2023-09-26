@@ -46,6 +46,9 @@ followers = db.Table(
 class User(UserMixin, PaginatedAPIMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
+    last_name = db.Column(db.String(255))
+    first_name = db.Column(db.String(255))
+    patronymic = db.Column(db.String(255))
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
@@ -130,7 +133,7 @@ class User(UserMixin, PaginatedAPIMixin, db.Model):
         return data
 
     def from_dict(self, data, new_user=False):
-        for field in ['username', 'email', 'about_me']:
+        for field in ['username', 'email', 'about_me', 'last_name', 'first_name', 'patronymic']:
             if field in data:
                 setattr(self, field, data[field])
         if new_user and 'password' in data:
@@ -170,3 +173,44 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+class Fund(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    brief = db.Column(db.String(3), index=True, unique=True)
+    name = db.Column(db.String(20))
+    code = db.Column(db.String(3))
+
+    def __repr__(self):
+        return '<Fund {}>'.format(self.body)
+
+class Resource(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    brief = db.Column(db.String(20), index=True, unique=True)
+    name = db.Column(db.String(255))
+    fund_id = db.Column(db.Integer, db.ForeignKey('fund.id'))
+    dateStart = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    dateEnd = db.Column(db.DateTime, index=True, default="19000101")
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Resource {}>'.format(self.body)
+
+    def to_dict(self):
+        data = {
+            'id': self.id,
+            'brief': self.brief,
+            'name': self.name,
+            'fund_id': self.fund_id,
+            'dateStart': self.dateStart.isoformat() + 'Z',
+            'dateEnd': self.dateEnd.isoformat() + 'Z',
+            'user_id': self.user_id
+        }
+
+        return data
+
+    def from_dict(self, data, new_account=False):
+        for field in ['brief', 'name', 'fund_id', 'dateStart', 'dateEnd', 'user_id']:
+            if field in data:
+                setattr(self, field, data[field])
+        if new_account and 'password' in data:
+            self.set_password(data['password'])
