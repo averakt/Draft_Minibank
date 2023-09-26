@@ -1,7 +1,7 @@
 """user tokens
 
 Revision ID: 834b1a697901
-Revises: c81bac34faab
+Revises: 2b017edaa91f
 Create Date: 2017-11-05 18:41:07.996137
 
 """
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '834b1a697901'
-down_revision = 'c81bac34faab'
+down_revision = '2b017edaa91f'
 branch_labels = None
 depends_on = None
 
