@@ -9,3 +9,4 @@ app.db
 **/docker-compose_*.yml
 **/.env
 **/nginx copy*.conf
+**/.DS_Store
