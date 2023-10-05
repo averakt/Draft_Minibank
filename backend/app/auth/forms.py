@@ -7,7 +7,7 @@ from app.models import User
 
 class LoginForm(FlaskForm):
     username = StringField(_l('Логин'), validators=[DataRequired()])
-    password = PasswordField(_l('Пароль'), validators=[DataRequired()])
+    password = PasswordField(_l('Password'), validators=[DataRequired()])
     remember_me = BooleanField(_l('Запомнить меня'))
     submit = SubmitField(_l('Войти'))
 
@@ -15,10 +15,10 @@ class LoginForm(FlaskForm):
 class RegistrationForm(FlaskForm):
     username = StringField(_l('Логин'), validators=[DataRequired()])
     email = StringField(_l('Email'), validators=[DataRequired(), Email()])
-    password = PasswordField(_l('Пароль'), validators=[DataRequired()])
+    password = PasswordField(_l('Password'), validators=[DataRequired()])
     password2 = PasswordField(
         _l('Повторите Пароль'), validators=[DataRequired(),
-                                           EqualTo('Пароль')])
+                                           EqualTo('password')])
     submit = SubmitField(_l('Зарегистрироваться'))
 
     def validate_username(self, username):
@@ -38,8 +38,8 @@ class ResetPasswordRequestForm(FlaskForm):
 
 
 class ResetPasswordForm(FlaskForm):
-    password = PasswordField(_l('Пароль'), validators=[DataRequired()])
+    password = PasswordField(_l('Password'), validators=[DataRequired()])
     password2 = PasswordField(
         _l('Повторите пароль'), validators=[DataRequired(),
-                                           EqualTo('Пароль')])
+                                           EqualTo('password')])
     submit = SubmitField(_l('Запросить сброс'))
