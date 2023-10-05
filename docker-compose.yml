@@ -1,4 +1,5 @@
 version: '3'
+name: draft_minibank
 services:
   flask:
     # Путь до Dockerfile
