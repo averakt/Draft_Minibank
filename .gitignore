@@ -10,3 +10,4 @@ app.db
 **/.env
 **/nginx copy*.conf
 **/.DS_Store
+commands.txt
