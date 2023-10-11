@@ -31,8 +31,9 @@ def create_account():
 @bp.route('/v1/accounts/<int:id>', methods=['PUT'])
 @token_auth.login_required
 def update_account(id):
-    if token_auth.current_user().id != id:
-        abort(403)
+    # Условие ниже не выполнится, т.к. id счета точно не совпадёт с id юзера, убираю этот код
+    # if token_auth.current_user().id != id:
+    #     abort(403)
     account = Resource.query.get_or_404(id)
     data = request.get_json() or {}
     if 'brief' in data and data['brief'] != account.brief and \
