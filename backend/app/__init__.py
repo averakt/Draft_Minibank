@@ -53,6 +53,9 @@ def create_app(config_class=Config):
     from app.main import bp as main_bp
     app.register_blueprint(main_bp)
 
+    from app.api.v1 import bp as api_bp
+    app.register_blueprint(api_bp, url_prefix='/api')
+
     if toggles.feature1:
         from app.accounts import bp as acc_create_bp
         app.register_blueprint(acc_create_bp)

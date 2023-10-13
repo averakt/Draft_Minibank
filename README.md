@@ -10,3 +10,5 @@ docker-compose --compatibility up --scale flask=3 -d
 
 
 В результате будет создан контейнер содержащий db PostgreSQL, Nginx для балансировки нагрузки между серверами приложений и 3 web приложение на Flask.
+
+Приложение `https://minibank.odon.pro` деплоится на сервер под пользователем `deploy` с помощью TeamCity `https://teamcity.odon.pro`
